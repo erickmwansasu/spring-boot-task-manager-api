@@ -1,0 +1,51 @@
+
+### Application Security & Environment Configurations ###
+# Never commit raw database passwords, JWT secret keys, or API tokens
+.env
+.env.local
+application-local.properties
+application-local.yml
+
+### System Files ###
+# Blocks OS-specific desktop cache thumbnails
+.DS_Store
+Thumbs.db
+
+### Log Files ###
+# Keeps runtime application logs out of your repository source history
+*.log
+logs/
+
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
