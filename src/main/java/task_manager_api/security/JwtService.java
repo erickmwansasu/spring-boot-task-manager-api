@@ -15,7 +15,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     @Value("${app.security.jwt.secret}")
-    private static String SECRET_KEY;
+    private String SECRET_KEY;
 
     public SecretKey getSigningKey() { return Keys.hmacShaKeyFor(SECRET_KEY.getBytes()); }
 
