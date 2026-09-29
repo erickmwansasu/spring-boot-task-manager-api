@@ -4,8 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import task_manager_api.entity.User;
 
 import javax.crypto.SecretKey;
 import java.awt.*;
@@ -19,11 +19,12 @@ public class JwtService {
 
     public SecretKey getSigningKey() { return Keys.hmacShaKeyFor(SECRET_KEY.getBytes()); }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateAccessToken(User user) {
         return Jwts.builder()
-                .subject(userDetails.getUsername())
+                .subject(user.getUsername())
+                .claim("userId", user.getId())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 10 * 60 * 60))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 15 * 60))
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -40,11 +41,11 @@ public class JwtService {
          return resolver.apply(claims);
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, User user) {
         String userName = extractUsername(token);
         Date expiration = extractClaim(token, Claims::getExpiration);
 
-        return userName.equals(userDetails.getUsername()) && expiration.after(new Date());
+        return userName.equals(user.getUsername()) && expiration.after(new Date());
     }
 
 }

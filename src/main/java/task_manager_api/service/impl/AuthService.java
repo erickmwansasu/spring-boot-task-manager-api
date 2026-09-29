@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import task_manager_api.dto.AuthResponse;
 import task_manager_api.dto.LoginRequest;
 import task_manager_api.dto.RegisterRequest;
+import task_manager_api.entity.RefreshToken;
 import task_manager_api.entity.User;
+import task_manager_api.repository.RefreshTokenRepository;
 import task_manager_api.repository.UserRepository;
 import task_manager_api.security.JwtService;
 
@@ -17,6 +19,7 @@ import task_manager_api.security.JwtService;
 @RequiredArgsConstructor
 public class AuthService {
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -29,9 +32,10 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
-        String token = jwtService.generateToken(user);
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = refreshTokenService.createRefreshToken(user).getToken();
 
-        return new AuthResponse(token);
+        return new AuthResponse(accessToken, refreshToken);
     }
 
     public AuthResponse login(@RequestBody LoginRequest request) {
@@ -42,7 +46,17 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
-        String token = jwtService.generateToken(user);
-        return new AuthResponse(token);
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = refreshTokenService.createRefreshToken(user).getToken();
+
+        return new AuthResponse(accessToken, refreshToken);
+    }
+
+    public AuthResponse refreshAccessToken(String refreshTokenValue) {
+        RefreshToken refreshToken = refreshTokenService.verifyExpiry(refreshTokenValue);
+        User user = refreshToken.getUser();
+
+        String newAccessToken = jwtService.generateAccessToken(user);
+        return new AuthResponse(newAccessToken, refreshTokenValue);
     }
 }
