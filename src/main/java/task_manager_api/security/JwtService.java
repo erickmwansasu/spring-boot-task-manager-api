@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    @Value("${app.security.jwt.secret}")
+    @Value("${app.security.jwt.access.token.secret}")
     private String SECRET_KEY;
 
     public SecretKey getSigningKey() { return Keys.hmacShaKeyFor(SECRET_KEY.getBytes()); }
@@ -23,6 +23,7 @@ public class JwtService {
         return Jwts.builder()
                 .subject(user.getUsername())
                 .claim("userId", user.getId())
+                .claim("role", user.getRole())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 15 * 60))
                 .signWith(getSigningKey())

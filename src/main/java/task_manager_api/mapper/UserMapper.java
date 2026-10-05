@@ -16,9 +16,5 @@ import task_manager_api.entity.User;
 )
 
 public interface UserMapper {
-    void updatePassword(UpdatePasswordRequest request, @MappingTarget User entity);
-
-    void enableTwoFactorAuth(Enable2FaRequest request, @MappingTarget User entity);
-
     void updateProfileRequest(UpdateProfileRequest request, @MappingTarget User entity);
 }

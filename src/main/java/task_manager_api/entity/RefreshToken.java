@@ -25,5 +25,6 @@ public class RefreshToken {
     @ManyToOne
     private User user;
 
+    @Column(name = "expiry_date")
     private Instant expiryDate;
 }

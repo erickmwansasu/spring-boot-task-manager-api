@@ -5,10 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import task_manager_api.dto.Enable2FaRequest;
 import task_manager_api.dto.UpdatePasswordRequest;
 import task_manager_api.dto.UpdateProfileRequest;
@@ -22,7 +19,7 @@ import task_manager_api.service.impl.UserServiceImpl;
 public class UserController {
     private final UserServiceImpl userService;
 
-    @PostMapping("/update-password")
+    @PutMapping("/update-password")
     public ResponseEntity<UserResponse> updatePassword(@AuthenticationPrincipal User user, @RequestBody UpdatePasswordRequest request) {
         Long userId = user.getId();
 

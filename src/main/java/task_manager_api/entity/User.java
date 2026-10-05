@@ -36,11 +36,17 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "two_factor_auth")
+    private Boolean twoFactorAuth;
+
     //Makes sure the default user role is USER before user creation
     @PrePersist
     protected void onCreate() {
         if(this.role == null)
             this.role = Role.USER;
+
+        if(this.twoFactorAuth == null)
+            this.twoFactorAuth = false;
     }
 
     @Override

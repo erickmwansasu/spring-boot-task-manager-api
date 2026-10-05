@@ -15,5 +15,4 @@ public class UserResponse {
     private String lastName;
     private String email;
     private boolean isTwoFactorEnabled;
-    private String profileUrl;
 }
