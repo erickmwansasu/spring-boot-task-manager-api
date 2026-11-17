@@ -17,6 +17,7 @@ Thumbs.db
 logs/
 
 HELP.md
+ISSUES.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

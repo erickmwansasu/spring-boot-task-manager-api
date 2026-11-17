@@ -1,4 +1,4 @@
-package task_manager_api.config;
+package task_manager_api.config;//package task_manager_api.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

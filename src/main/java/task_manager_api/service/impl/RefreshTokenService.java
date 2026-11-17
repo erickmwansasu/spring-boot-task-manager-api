@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import task_manager_api.entity.RefreshToken;
 import task_manager_api.entity.User;
-import task_manager_api.exception.ResourceNotFoundException;
+import task_manager_api.exception.UserNotFoundException;
 import task_manager_api.repository.RefreshTokenRepository;
 
 import java.time.Instant;
@@ -28,7 +28,7 @@ public class RefreshTokenService {
 
     public RefreshToken verifyExpiry(String token) {
         RefreshToken refreshToken = refreshTokenRepository.findByToken(token)
-                .orElseThrow(() -> new ResourceNotFoundException("Refresh token not found!"));
+                .orElseThrow(() -> new UserNotFoundException("Refresh token not found!"));
 
         if(refreshToken.getExpiryDate().isBefore(Instant.now())) {
             refreshTokenRepository.delete(refreshToken);

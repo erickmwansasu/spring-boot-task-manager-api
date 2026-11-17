@@ -11,7 +11,6 @@ import task_manager_api.dto.LoginRequest;
 import task_manager_api.dto.RegisterRequest;
 import task_manager_api.entity.RefreshToken;
 import task_manager_api.entity.User;
-import task_manager_api.repository.RefreshTokenRepository;
 import task_manager_api.repository.UserRepository;
 import task_manager_api.security.JwtService;
 
@@ -32,6 +31,7 @@ public class AuthService {
                 .build();
 
         userRepository.save(user);
+        userRepository.findAll
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = refreshTokenService.createRefreshToken(user).getToken();
 

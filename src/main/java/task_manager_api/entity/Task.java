@@ -1,10 +1,7 @@
 package task_manager_api.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import task_manager_api.enums.Status;
 import task_manager_api.enums.Priority;
 
@@ -16,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +22,14 @@ public class Task {
     @Column(name = "task_name", nullable = false)
     private String taskName;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "due_date")
+    @Column(name = "due_date", nullable = false)
     private Date dueDate;
+
+    @ManyToOne
+    private User user;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)

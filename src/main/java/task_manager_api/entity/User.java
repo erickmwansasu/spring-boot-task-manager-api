@@ -36,11 +36,17 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private Long phoneNumber;
+
+    private boolean two_factor_auth;
+
     //Makes sure the default user role is USER before user creation
     @PrePersist
     protected void onCreate() {
         if(this.role == null)
             this.role = Role.USER;
+
+        this.two_factor_auth = false;
     }
 
     @Override
