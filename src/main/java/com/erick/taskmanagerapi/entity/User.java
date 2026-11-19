@@ -21,11 +21,13 @@ public class User implements UserDetails {
     private Long id;
 
     @Email
+    @Size(max = 254)
     @NotBlank(message = "Email is required")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @NotBlank(message = "Password is required")
+    @Size(min = 8, max = 72)
     @Column(nullable = false)
     private String password;
 
